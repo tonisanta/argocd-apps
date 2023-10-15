@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-go-api-deployment
+spec:
+  template:
+    spec:
+      containers:
+      - name: simple-go-api
+        env:
+        - name: message
+          value: "Hello from testing overlay"

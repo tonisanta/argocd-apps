@@ -6,4 +6,4 @@ patches:
 - path: ./custom_message.yaml
 images:
 - name: tonisanta/simple-go-api
-  newTag: main-0dda759
+  newTag: main-139e7ab

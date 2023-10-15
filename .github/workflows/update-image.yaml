@@ -41,5 +41,5 @@ jobs:
                 git config --global user.email "my-gh-actions@example.com"
                 git config --global user.name "GHA git-ops"
                 git add .
-                git commit -m "Set ${{ inputs.project }} image tag to '${{ inputs.docker-image }}'"
+                git commit -m "Set ${{ inputs.app }}/${{ inputs.project }} image tag to '${{ inputs.docker-image }}'"
                 git push

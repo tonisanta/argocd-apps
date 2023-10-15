@@ -1,0 +1,45 @@
+on:
+    workflow_dispatch:
+      inputs:
+        project:
+          description: 'Project'
+          required: true
+          default: 'testing'
+          type: choice
+          options:
+          - testing         
+        app:
+            description: 'App to update'
+            required: true
+            default: 'my-go-api'
+            type: choice
+            options:
+            - my-go-api              
+        docker-image:
+          description: 'Docker image to use'
+          required: true
+          type: string
+
+jobs:
+    log-the-inputs:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+        steps:        
+            - name: Checkout
+              uses: actions/checkout@v3
+
+            - uses: de-vri-es/setup-git-credentials@v2
+              with:
+                credentials: ${{secrets.GITHUB_TOKEN}}
+
+            - uses: imranismail/setup-kustomize@v2
+            - run: |
+                cd ./apps/${{ inputs.app }}/overlays/${{ inputs.project }}
+                echo $PWD
+                kustomize edit set image ${{ inputs.docker-image }}
+                git config --global user.email "my-gh-actions@example.com"
+                git config --global user.name "GHA git-ops"
+                git add .
+                git commit -m "Set ${{ inputs.project }} image tag to '${{ inputs.docker-image }}'"
+                git push
